@@ -1,0 +1,14 @@
+body {
+  background-color: #e7eaf4;
+  /* color: white; */
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: #1d1b1b;
+}
