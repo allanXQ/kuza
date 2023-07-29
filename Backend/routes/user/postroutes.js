@@ -17,14 +17,16 @@ const { verifyjwt } = require("../../middleware/verifyjwt");
 const { ForgotPassword } = require("../../controllers/auth/forgot-password");
 const { refreshtoken } = require("../../controllers/auth/refreshjwt");
 const { Logout } = require("../../controllers/auth/logout");
+const formValidate = require("../../middleware/validate");
+const { regSchema, loginSchema } = require("../../yupschemas");
 
-router.post("/auth/register", Register);
-router.post("/auth/login", Login);
+router.post("/auth/register", formValidate(regSchema), Register);
+router.post("/auth/login", formValidate(loginSchema), Login);
 router.post("/auth/reset_password/:id/:token", ResetPassword);
 router.post("/auth/refreshtoken", refreshtoken);
 router.post("/auth/logout", Logout);
 
-router.post("forgot_password", ForgotPassword);
+router.post("/auth/forgot_password", ForgotPassword);
 router.post("/change_password", verifyjwt, UpdatePassword);
 
 router.post("/mpesa/deposit", verifyjwt, MpesaDeposit);

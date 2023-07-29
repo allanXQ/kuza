@@ -1,5 +1,7 @@
 require("dotenv").config();
 const User = require("../../models/Users");
+const jwt = require("jsonwebtoken");
+const nodeoutlook = require("nodejs-nodemailer-outlook");
 
 const ForgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -7,7 +9,7 @@ const ForgotPassword = async (req, res) => {
     if (!email) {
       return res.status(400).json({ message: "Invalid Email" });
     }
-    const find_user = await User.findOne({ email }).lean();
+    const find_user = await User.findOne({ email });
     if (!find_user) {
       return res.status(400).json({ message: "Email not found" });
     }
@@ -16,7 +18,7 @@ const ForgotPassword = async (req, res) => {
       id: find_user.userid,
     };
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-    const url = req.hostname;
+    const url = req.hostname + ": + process.env.PORT";
     const id = find_user.userid;
     const link = `https://${url}/reset-password/${id}/${token}`;
 

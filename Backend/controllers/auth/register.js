@@ -11,18 +11,7 @@ const Register = async (req, res) => {
     password: plain_password,
   } = req.body;
   const id = uuid.v4();
-  if (!username) {
-    return res.json({ message: "Fill in all required values" });
-  }
-  if (!email) {
-    return res.json({ message: "Fill in all required values" });
-  }
-  if (!phone) {
-    return res.json({ message: "Fill in all required values" });
-  }
-  if (!plain_password) {
-    return res.json({ message: "Fill in all required values" });
-  }
+
   try {
     const find_username = await User.findOne({ username });
     const find_phone = await User.findOne({ phone });

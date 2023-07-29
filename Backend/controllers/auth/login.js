@@ -6,12 +6,6 @@ const User = require("../../models/Users");
 const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email) {
-      return res.status(400).json({ message: "Fill in all required values" });
-    }
-    if (!password) {
-      return res.status(400).json({ message: "Fill in all required values" });
-    }
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid email/password" });
@@ -31,19 +25,20 @@ const Login = async (req, res) => {
       await User.updateOne({ email }, { $set: { refreshtoken } });
       res.cookie("accesstoken", accesstoken, {
         httpOnly: true,
+        sameSite: "strict",
         // secure: true,
         maxAge: 1 * 60 * 60 * 1000,
       });
 
       res.cookie("refreshtoken", refreshtoken, {
         httpOnly: true,
+        sameSite: "strict",
         path: "/api/auth/refresh_token",
         // secure: true,
         maxAge: 24 * 60 * 60 * 1000,
       });
       return res.status(200).json({
         message: "Successful login",
-        access_token: accesstoken,
       });
     }
     res.status(401).json({ message: "Invalid email/password" });

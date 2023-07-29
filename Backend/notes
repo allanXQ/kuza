@@ -1,0 +1,26 @@
+//notes and working components
+
+#create cookies util function
+#create sendmail function
+#create database logger
+
+config
+
+working controllers
+auth - register, login
+
+password reset link should only be used once
+update reset url(consider using url from .env)
+
+    account
+
+middleware
+
+models
+
+routes
+
+utils
+
+yupschema
+regschema

@@ -32,11 +32,13 @@ const refreshtoken = async (req, res) => {
     );
     res.cookie("accesstoken", accesstoken, {
       httpOnly: true,
+      sameSite: "strict",
       // secure: true,
       maxAge: 1 * 60 * 60 * 1000,
     });
     res.cookie("refreshtoken", newrefreshtoken, {
       httpOnly: true,
+      sameSite: "strict",
       path: "/api/auth/refresh_token",
       // secure: true,
       maxAge: 24 * 60 * 60 * 1000,
