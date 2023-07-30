@@ -7,50 +7,50 @@ const MpesaWithdraw = async (req, res) => {
     if (!amount) {
       return res.status(400).json({ message: "Input amount" });
     }
-    const min_withdrawal = 0;
-    let int_amount = parseInt(amount);
+    const minWithdrawal = 0;
+    let intAmount = parseInt(amount);
     const id = res.locals.id;
-    const get_user = await User.findOne({ userid: id });
-    const get_balance = parseInt(get_user.balance);
-    const username = get_user.username;
-    const tax_amount = int_amount * 0.1;
-    const total_amount = int_amount + tax_amount;
-    const with_amount = int_amount - tax_amount;
+    const getUser = await User.findOne({ userid: id });
+    const getBalance = parseInt(getUser.balance);
+    const username = getUser.username;
+    const taxAmount = intAmount * 0.1;
+    const totalAmount = intAmount + taxAmount;
+    const withAmount = intAmount - taxAmount;
 
-    if (int_amount < min_withdrawal) {
+    if (intAmount < minWithdrawal) {
       return res.status(400).json({
-        message: `requested amount is less than minimum requirement(${min_withdrawal})`,
+        message: `requested amount is less than minimum requirement(${minWithdrawal})`,
       });
     }
 
-    if (int_amount > get_balance) {
+    if (intAmount > getBalance) {
       return res.status(400).json({
-        message: `your balance of ${get_balance} is less than amount requested(${amount})`,
+        message: `your balance of ${getBalance} is less than amount requested(${amount})`,
       });
     }
-    if (get_balance < min_withdrawal) {
+    if (getBalance < minWithdrawal) {
       return res.status(400).json({
-        message: `your balance of ${get_balance} is less than minimum requirement(${min_withdrawal})`,
+        message: `your balance of ${getBalance} is less than minimum requirement(${minWithdrawal})`,
       });
     }
 
-    if (get_balance - total_amount < 0) {
+    if (getBalance - totalAmount < 0) {
       res.status(400).json({
-        message: `your balance of ${get_balance} is not enough to cover withdrawal amount(${amount}) + commission of ${tax_amount}`,
+        message: `your balance of ${getBalance} is not enough to cover withdrawal amount(${amount}) + commission of ${taxAmount}`,
       });
     }
-    const create_withdraw = await Withdraw.create({
+    const createWithdrawal = await Withdraw.create({
       username,
       phone,
-      amount: int_amount,
+      amount: intAmount,
     });
-    if (!create_withdraw) {
+    if (!createWithdrawal) {
       return res.status(400).json({ message: "withdrawal failed" });
     }
-    const update_user = await User.updateOne(
+    const updateUser = await User.updateOne(
       { username },
       {
-        $set: { balance: get_balance - total_amount },
+        $set: { balance: getBalance - totalAmount },
       }
     );
     res.status(200).json({ message: "withdrawal successful" });

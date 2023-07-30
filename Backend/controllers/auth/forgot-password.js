@@ -9,17 +9,17 @@ const ForgotPassword = async (req, res) => {
     if (!email) {
       return res.status(400).json({ message: "Invalid Email" });
     }
-    const find_user = await User.findOne({ email });
-    if (!find_user) {
+    const findUser = await User.findOne({ email });
+    if (!findUser) {
       return res.status(400).json({ message: "Email not found" });
     }
-    const secret = process.env.JWT_SECRET + find_user.password;
+    const secret = process.env.JWT_SECRET + findUser.password;
     const payload = {
-      id: find_user.userid,
+      id: findUser.userid,
     };
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
     const url = req.hostname + ": + process.env.PORT";
-    const id = find_user.userid;
+    const id = findUser.userid;
     const link = `https://${url}/reset-password/${id}/${token}`;
 
     nodeoutlook.sendEmail({

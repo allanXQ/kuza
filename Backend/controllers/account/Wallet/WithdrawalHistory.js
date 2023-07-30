@@ -2,11 +2,10 @@ const Withdrawals = require("../../../models/Withdrawals");
 
 const WithdrawalHistory = async (req, res) => {
   try {
-    const { username } = req.headers;
-    const id = res.locals.id;
-    const get_with = await Withdrawals.find({ username }).lean();
-    if (get_with) {
-      return res.status(200).json({ with_data: get_with });
+    const { username } = req.body;
+    const getWithdrawals = await Withdrawals.find({ username });
+    if (getWithdrawals) {
+      return res.status(200).json({ with_data: getWithdrawals });
     } else {
       return res.status(400).json({ message: "An error occured" });
     }

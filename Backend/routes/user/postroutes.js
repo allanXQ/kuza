@@ -15,7 +15,7 @@ const { Register } = require("../../controllers/auth/register");
 const { ResetPassword } = require("../../controllers/auth/reset-password");
 const { verifyjwt } = require("../../middleware/verifyjwt");
 const { ForgotPassword } = require("../../controllers/auth/forgot-password");
-const { refreshtoken } = require("../../controllers/auth/refreshjwt");
+const { RefreshToken } = require("../../controllers/auth/refreshjwt");
 const { Logout } = require("../../controllers/auth/logout");
 const formValidate = require("../../middleware/validate");
 const { regSchema, loginSchema } = require("../../yupschemas");
@@ -23,7 +23,7 @@ const { regSchema, loginSchema } = require("../../yupschemas");
 router.post("/auth/register", formValidate(regSchema), Register);
 router.post("/auth/login", formValidate(loginSchema), Login);
 router.post("/auth/reset_password/:id/:token", ResetPassword);
-router.post("/auth/refreshtoken", refreshtoken);
+router.post("/auth/refresh_token", RefreshToken);
 router.post("/auth/logout", Logout);
 
 router.post("/auth/forgot_password", ForgotPassword);

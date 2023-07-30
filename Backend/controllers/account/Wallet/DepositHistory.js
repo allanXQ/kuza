@@ -1,15 +1,14 @@
-const MpesaDeposits = require("../models/MpesaDeposits");
+const MpesaDeposits = require("../../../models/MpesaDeposits");
 
 const MpesaDepositHistory = async (req, res) => {
   try {
-    const { phone_number } = req.headers;
-    console.log(phone_number);
-    const id = res.locals.id;
-    //const phone_ = '254'+phone_number
-    const phone = parseInt(phone_number);
-    const get_dep = await MpesaDeposits.find({ phone }).lean();
-    if (get_dep) {
-      return res.status(200).json({ get_dep });
+    const { phoneNumber } = req.body;
+    console.log(phoneNumber);
+    //const phone_ = '254'+phoneNumber
+    const phone = parseInt(phoneNumber);
+    const getDeposit = await MpesaDeposits.find({ phone });
+    if (getDeposit) {
+      return res.status(200).json({ getDeposit });
     } else {
       return res.status(400).json({ message: "An error occured" });
     }

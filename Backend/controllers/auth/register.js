@@ -8,24 +8,24 @@ const Register = async (req, res) => {
     email,
     referrer,
     phone,
-    password: plain_password,
+    password: plainPassword,
   } = req.body;
   const id = uuid.v4();
 
   try {
-    const find_username = await User.findOne({ username });
-    const find_phone = await User.findOne({ phone });
-    const find_email = await User.findOne({ email });
-    if (find_username) {
+    const getUser = await User.findOne({ username });
+    const getPhone = await User.findOne({ phone });
+    const getEmail = await User.findOne({ email });
+    if (getUser) {
       return res.status(400).json({ message: "Invalid username" });
     }
-    if (find_email) {
+    if (getEmail) {
       return res.status(400).json({ message: "Invalid email" });
     }
-    if (find_phone) {
-      return res.status(400).json({ message: "Invalid phone_number" });
+    if (getPhone) {
+      return res.status(400).json({ message: "Invalid phoneNumber" });
     }
-    const password = await bcrypt.hash(plain_password, 10);
+    const password = await bcrypt.hash(plainPassword, 10);
     await User.create({
       userid: id,
       username,

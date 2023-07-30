@@ -4,30 +4,30 @@ const bcrypt = require("bcrypt");
 
 const UpdatePassword = async (req, res) => {
   try {
-    const { old_password, new_password: plain_password } = req.body;
-    if (!old_password) {
+    const { oldPassword, newPassword: plainPassword } = req.body;
+    if (!oldPassword) {
       return res.status(400).json({ message: "Input Old Password" });
     }
-    if (!plain_password) {
+    if (!plainPassword) {
       return res.status(400).json({ message: "Input New Password" });
     }
     const id = res.locals.id;
-    const get_user = await User.findOne({ userid: id }).lean();
-    if (!get_user) {
+    const getUser = await User.findOne({ userid: id });
+    if (!getUser) {
       return res.status(400).json({ message: "Invalid Request" });
     }
-    const bcompare = await bcrypt.compare(old_password, get_user.password);
+    const bcompare = await bcrypt.compare(oldPassword, getUser.password);
     if (!bcompare) {
       return res.status(400).json({ message: "Invalid Password" });
     }
-    hashedpassword = await bcrypt.hash(plain_password, 10);
-    const user_update = await User.updateOne(
+    hashedPassword = await bcrypt.hash(plainPassword, 10);
+    const userUpdate = await User.updateOne(
       { userid: id },
       {
-        $set: { password: hashedpassword },
+        $set: { password: hashedPassword },
       }
     );
-    if (!user_update) {
+    if (!userUpdate) {
       return res.status(400).json({ message: "Update failed" });
     }
     res.status(200).json({ message: "Update successful" });

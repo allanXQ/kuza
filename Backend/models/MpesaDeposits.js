@@ -12,7 +12,7 @@ today = year + ":" + month + ":" + day + " " + hours + ":" + minutes;
 const MpesaDeposits = new mongoose.Schema({
   phone: { type: Number, required: true },
   amount: { type: Number, required: true },
-  mpesa_ref: { type: String, required: true },
+  mpesaRef: { type: String, required: true },
   created: { type: String, default: today },
 });
 

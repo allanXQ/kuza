@@ -21,7 +21,7 @@ const users = mongoose.Schema({
   balance: { type: Number, default: 50 },
   status: { type: String, default: "inactive" },
   referrer: { type: String, default: "none" },
-  refreshtoken: { type: String },
+  refreshToken: { type: String },
   password: { type: String, required: true },
   created: { type: String, default: today },
 });

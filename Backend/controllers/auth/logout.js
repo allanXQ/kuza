@@ -2,7 +2,7 @@ const User = require("../../models/Users");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const cleartokens = (res) => {
+const clearTokens = (res) => {
   res.cookie("accessToken", "", {
     expires: new Date(0),
     httpOnly: true,
@@ -19,24 +19,28 @@ const cleartokens = (res) => {
 
 const Logout = async (req, res) => {
   try {
-    const { accessToken } = req.cookies;
-    // Assuming you have a User model and each User has a refreshToken field
-    const verify = jwt.verify(accessToken, process.env.JWT_SECRET);
-    const user = await User.findOne({
-      userid: verify.id,
-    });
-    if (!user) {
-      cleartokens(res);
-      return res.status(401).json({ message: "Logged out" });
-    }
-    // Invalidate the refresh token
-    user.refreshToken = null;
-    await user.save();
-    // Clear the cookies
-    cleartokens(res);
+    console.log(req.cookies);
     res.status(200).json({ message: "Logged out successfully" });
+    // const { accessToken } = req.cookies;
+    // console.log(req);
+    // // Assuming you have a User model and each User has a refreshToken field
+    // const verify = jwt.verify(accessToken, process.env.JWT_SECRET);
+    // const user = await User.findOne({
+    //   userid: verify.id,
+    // });
+    // if (!user) {
+    //   clearTokens(res);
+    //   return res.status(401).json({ message: "Logged out" });
+    // }
+    // // Invalidate the refresh token
+    // user.refreshToken = null;
+    // await user.save();
+    // // Clear the cookies
+    // clearTokens(res);
+    // res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    cleartokens(res);
+    console.log(error);
+    clearTokens(res);
     res.status(500).json({ message: "Logged out" });
   }
 };

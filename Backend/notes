@@ -1,16 +1,16 @@
 //notes and working components
-
+#check helmet and cors implementation
 #create cookies util function
 #create sendmail function
 #create database logger
+
+#password reset link should only be used once
+#update reset url(consider using url from .env)
 
 config
 
 working controllers
 auth - register, login
-
-password reset link should only be used once
-update reset url(consider using url from .env)
 
     account
 

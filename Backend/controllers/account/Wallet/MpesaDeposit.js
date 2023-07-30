@@ -7,17 +7,17 @@ const MpesaDeposit = async (req, res) => {
     return res.status(400).json({ message: "Fill in all requires values" });
   }
 
-  const min_deposit = 100;
-  const max_deposit = 500;
-  if (parseInt(amount) < min_deposit) {
+  const minDeposit = 100;
+  const maxDeposit = 500;
+  if (parseInt(amount) < minDeposit) {
     return res.status(400).json({
-      message: `minimum deposit is ${min_deposit}`,
+      message: `minimum deposit is ${minDeposit}`,
     });
   }
 
-  if (parseInt(amount) > max_deposit) {
+  if (parseInt(amount) > maxDeposit) {
     return res.status(400).json({
-      message: `maximum deposit is ${max_deposit}`,
+      message: `maximum deposit is ${maxDeposit}`,
     });
   }
   const url = " https://tinypesa.com/api/v1/express/initialize";

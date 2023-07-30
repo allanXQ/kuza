@@ -7,14 +7,14 @@ const ResetPassword = async (req, res) => {
   try {
     const { password } = req.body;
     const { id, token } = req.params;
-    const get_user = await User.findOne({ userid: id });
-    if (!get_user) {
+    const getUser = await User.findOne({ userid: id });
+    if (!getUser) {
       return res.status(400).json({ message: "invalid user" });
     }
     if (!token) {
       return res.status(403).json({ message: "Forbidden" });
     }
-    const secret = process.env.JWT_SECRET + get_user.password;
+    const secret = process.env.JWT_SECRET + getUser.password;
     let verify = jwt.verify(token, secret);
     if (!verify) {
       return res.status(403).json({ message: "Forbidden" });

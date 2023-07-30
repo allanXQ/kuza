@@ -12,25 +12,25 @@ const Login = async (req, res) => {
     }
     const compare = await bcrypt.compare(password, user.password);
     if (compare) {
-      const accesstoken = jwt.sign(
+      const accessToken = jwt.sign(
         { id: user.userid, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      const refreshtoken = jwt.sign(
+      const refreshToken = jwt.sign(
         { id: user.userid, role: user.role },
         process.env.JWT_REFRESH_SECRET,
         { expiresIn: "1d" }
       );
-      await User.updateOne({ email }, { $set: { refreshtoken } });
-      res.cookie("accesstoken", accesstoken, {
+      await User.updateOne({ email }, { $set: { refreshToken } });
+      res.cookie("accessToken", accessToken, {
         httpOnly: true,
         sameSite: "strict",
         // secure: true,
         maxAge: 1 * 60 * 60 * 1000,
       });
 
-      res.cookie("refreshtoken", refreshtoken, {
+      res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         sameSite: "strict",
         path: "/api/auth/refresh_token",

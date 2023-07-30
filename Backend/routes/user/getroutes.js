@@ -4,7 +4,7 @@ const {
 const {
   WithdrawalHistory,
 } = require("../../controllers/account/Wallet/WithdrawalHistory");
-const verifyjwt = require("../../middleware/verifyjwt");
+const { verifyjwt } = require("../../middleware/verifyjwt");
 
 const router = require("express").Router();
 
