@@ -3,9 +3,14 @@
 #create cookies util function
 #create sendmail function
 #create database logger
+#create withdrawal fees model and add crud to mpesawithdraw controller
+#forgotpassword controller need tweaking
+#check logout with gpt
 
 #password reset link should only be used once
 #update reset url(consider using url from .env)
+
+#use messages module
 
 config
 

@@ -1,6 +1,7 @@
 const uuid = require("uuid");
 const User = require("../../models/Users");
 const bcrypt = require("bcrypt");
+const Messages = require("../../utils/messages");
 
 const Register = async (req, res) => {
   const {
@@ -17,13 +18,13 @@ const Register = async (req, res) => {
     const getPhone = await User.findOne({ phone });
     const getEmail = await User.findOne({ email });
     if (getUser) {
-      return res.status(400).json({ message: "Invalid username" });
+      return res.status(400).json({ message: Messages.invalidUsername });
     }
     if (getEmail) {
-      return res.status(400).json({ message: "Invalid email" });
+      return res.status(400).json({ message: Messages.invalidEmail });
     }
     if (getPhone) {
-      return res.status(400).json({ message: "Invalid phoneNumber" });
+      return res.status(400).json({ message: Messages.invalidPhoneNumber });
     }
     const password = await bcrypt.hash(plainPassword, 10);
     await User.create({
@@ -34,10 +35,10 @@ const Register = async (req, res) => {
       referrer,
       password,
     });
-    return res.status(200).json({ message: "User created successfully" });
+    return res.status(200).json({ message: Messages.userCreatedSuccessfully });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Error creating user! Try again" });
+    return res.status(500).json({ message: Messages.serverError });
   }
 };
 

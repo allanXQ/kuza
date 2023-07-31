@@ -2,23 +2,22 @@ require("dotenv").config();
 const User = require("../../models/Users");
 const jwt = require("jsonwebtoken");
 const nodeoutlook = require("nodejs-nodemailer-outlook");
+const Messages = require("../../utils/messages");
 
 const ForgotPassword = async (req, res) => {
-  const { email } = req.body;
   try {
-    if (!email) {
-      return res.status(400).json({ message: "Invalid Email" });
-    }
+    const { email } = req.body;
+
     const findUser = await User.findOne({ email });
     if (!findUser) {
-      return res.status(400).json({ message: "Email not found" });
+      return res.status(400).json({ message: Messages.userNotFound });
     }
     const secret = process.env.JWT_SECRET + findUser.password;
     const payload = {
       id: findUser.userid,
     };
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-    const url = req.hostname + ": + process.env.PORT";
+    const url = req.hostname + ":" + process.env.PORT;
     const id = findUser.userid;
     const link = `https://${url}/reset-password/${id}/${token}`;
 
@@ -40,17 +39,17 @@ const ForgotPassword = async (req, res) => {
       //text: 'This is text version!',
       onError: (e) => {
         console.log(e);
-        return res.status(400).json({ message: "An error ocurred. Try again" });
+        return res.status(400).json({ message: Messages.requestFailed });
       },
       onSuccess: (i) => {
         return res.status(200).json({
-          message: "Password reset link sent to your email",
+          message: Messages.passwordResetEmail,
         });
       },
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "An error ocurred. Try again" });
+    return res.status(500).json({ message: Messages.serverError });
   }
 };
 

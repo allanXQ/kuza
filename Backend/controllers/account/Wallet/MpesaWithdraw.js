@@ -1,62 +1,76 @@
+const { default: mongoose } = require("mongoose");
+const WalletConfig = require("../../../config/wallet");
+const Messages = require("../../../utils/messages");
+
 const MpesaWithdraw = async (req, res) => {
   try {
     const { phone, amount } = req.body;
-    if (!phone) {
-      return res.status(400).json({ message: "Input phone" });
-    }
-    if (!amount) {
-      return res.status(400).json({ message: "Input amount" });
-    }
-    const minWithdrawal = 0;
+    const { minWithdrawal, withdrawalFeePercentage } = WalletConfig;
     let intAmount = parseInt(amount);
-    const id = res.locals.id;
-    const getUser = await User.findOne({ userid: id });
+    const getUser = await User.findOne({ phone });
+    if (!getUser) {
+      return res.status(400).json({ message: Messages.userNotFound });
+    }
     const getBalance = parseInt(getUser.balance);
     const username = getUser.username;
-    const taxAmount = intAmount * 0.1;
+    const taxAmount = intAmount * withdrawalFeePercentage;
     const totalAmount = intAmount + taxAmount;
-    const withAmount = intAmount - taxAmount;
+
+    if (getBalance < minWithdrawal) {
+      return res.status(400).json({
+        message: Messages.insufficientBalance,
+      });
+    }
 
     if (intAmount < minWithdrawal) {
       return res.status(400).json({
-        message: `requested amount is less than minimum requirement(${minWithdrawal})`,
+        message: Messages.minWithdrawal + ` ${minWithdrawal}`,
       });
     }
 
     if (intAmount > getBalance) {
       return res.status(400).json({
-        message: `your balance of ${getBalance} is less than amount requested(${amount})`,
-      });
-    }
-    if (getBalance < minWithdrawal) {
-      return res.status(400).json({
-        message: `your balance of ${getBalance} is less than minimum requirement(${minWithdrawal})`,
+        message: Messages.insufficientBalance,
       });
     }
 
     if (getBalance - totalAmount < 0) {
-      res.status(400).json({
-        message: `your balance of ${getBalance} is not enough to cover withdrawal amount(${amount}) + commission of ${taxAmount}`,
+      return res.status(400).json({
+        message: Messages.insufficientBalance,
       });
     }
-    const createWithdrawal = await Withdraw.create({
-      username,
-      phone,
-      amount: intAmount,
-    });
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    const createWithdrawal = await Withdraw.create(
+      {
+        username,
+        phone,
+        amount: intAmount,
+      },
+      { session }
+    );
+
     if (!createWithdrawal) {
-      return res.status(400).json({ message: "withdrawal failed" });
+      return res.status(400).json({ message: Messages.withdrawalFailed });
     }
     const updateUser = await User.updateOne(
       { username },
       {
-        $set: { balance: getBalance - totalAmount },
-      }
+        $inc: { balance: -totalAmount },
+      },
+      { session, new: true }
     );
-    res.status(200).json({ message: "withdrawal successful" });
+    if (updateUser.nModified === 0) {
+      return res.status(400).json({ message: Messages.withdrawalFailed });
+    }
+    await session.commitTransaction();
+    session.endSession();
+    return res.status(200).json({ message: Messages.withdrawalSuccess });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "failed withdrawal" });
+    return res.status(500).json({ message: Messages.serverError });
   }
 };
 

@@ -18,7 +18,14 @@ const { ForgotPassword } = require("../../controllers/auth/forgot-password");
 const { RefreshToken } = require("../../controllers/auth/refreshjwt");
 const { Logout } = require("../../controllers/auth/logout");
 const formValidate = require("../../middleware/validate");
-const { regSchema, loginSchema } = require("../../yupschemas");
+const {
+  regSchema,
+  loginSchema,
+  depositSchema,
+  withdrawalSchema,
+  updatePasswordSchema,
+  forgotPasswordSchema,
+} = require("../../yupschemas");
 
 router.post("/auth/register", formValidate(regSchema), Register);
 router.post("/auth/login", formValidate(loginSchema), Login);
@@ -26,11 +33,30 @@ router.post("/auth/reset_password/:id/:token", ResetPassword);
 router.post("/auth/refresh_token", RefreshToken);
 router.post("/auth/logout", Logout);
 
-router.post("/auth/forgot_password", ForgotPassword);
-router.post("/change_password", verifyjwt, UpdatePassword);
+router.post(
+  "/auth/forgot_password",
+  formValidate(forgotPasswordSchema),
+  ForgotPassword
+);
+router.post(
+  "/update_password",
+  verifyjwt,
+  formValidate(updatePasswordSchema),
+  UpdatePassword
+);
 
-router.post("/mpesa/deposit", verifyjwt, MpesaDeposit);
+router.post(
+  "/mpesa/deposit",
+  verifyjwt,
+  formValidate(depositSchema),
+  MpesaDeposit
+);
 router.post("/tinypesa/webhook", TinypesaWebhook);
-router.post("/withdraw", verifyjwt, MpesaWithdraw);
+router.post(
+  "/withdraw",
+  verifyjwt,
+  formValidate(withdrawalSchema),
+  MpesaWithdraw
+);
 
 module.exports = router;

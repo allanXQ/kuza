@@ -1,18 +1,19 @@
 const yup = require("yup");
+const Messages = require("../utils/messages");
 
 const regSchema = yup.object().shape({
   username: yup.string().required(),
   email: yup.string().email().required(),
   phone: yup
     .string()
-    .matches(/^(07|01)\d{8}$/, "Invalid Phone number")
+    .matches(/^(2547|2541)\d{8}$/, Messages.invalidPhoneNumber)
     .required(),
   referrer: yup.string(),
   password: yup
     .string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must be at least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number, and can contain special characters"
+      Messages.passwordRegex
     )
     .required(),
 });
@@ -26,13 +27,36 @@ const forgotPasswordSchema = yup.object().shape({
   email: yup.string().email().required(),
 });
 
-const resetPasswordSchema = yup.object().shape({
-  password: yup
+const updatePasswordSchema = yup.object().shape({
+  oldPassword: yup
     .string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must be at least 8 characters, must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number, and can contain special characters"
+      `Old ${Messages.passwordRegex}`
     )
+    .required(),
+  newPassword: yup
+    .string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      `New ${Messages.passwordRegex}`
+    )
+    .required(),
+});
+
+const depositSchema = yup.object().shape({
+  amount: yup.number().required(),
+  phone: yup
+    .string()
+    .matches(/^(2547|2541)\d{8}$/, Messages.invalidPhoneNumber)
+    .required(),
+});
+
+const withdrawalSchema = yup.object().shape({
+  amount: yup.number().required(),
+  phone: yup
+    .string()
+    .matches(/^(2547|2541)\d{8}$/, Messages.invalidPhoneNumber)
     .required(),
 });
 
@@ -40,5 +64,7 @@ module.exports = {
   regSchema,
   loginSchema,
   forgotPasswordSchema,
-  resetPasswordSchema,
+  updatePasswordSchema,
+  depositSchema,
+  withdrawalSchema,
 };
