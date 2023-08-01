@@ -1,13 +1,12 @@
 //notes and working components
 #check helmet and cors implementation
-#create cookies util function
 #create sendmail function
 #create database logger
 #create withdrawal fees model and add crud to mpesawithdraw controller
 #forgotpassword controller need tweaking
-#check logout with gpt
+#group rotes by resource and not method
 
-#password reset link should only be used once
+#password reset link should only be used once.save reset token to db and invalidate after use
 #update reset url(consider using url from .env)
 
 #use messages module
