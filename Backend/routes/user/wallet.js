@@ -33,7 +33,7 @@ router.post(
   MpesaWithdraw
 );
 
-router.get("/deposit_history", verifyjwt, MpesaDepositHistory);
-router.get("/withdrawal_history", verifyjwt, WithdrawalHistory);
+router.get("/deposit-history", verifyjwt, MpesaDepositHistory);
+router.get("/withdrawal-history", verifyjwt, WithdrawalHistory);
 
 module.exports = router;

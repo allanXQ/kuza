@@ -15,19 +15,19 @@ const {
   forgotPasswordSchema,
 } = require("../../yupschemas");
 
-router.post("/auth/register", formValidate(regSchema), Register);
-router.post("/auth/login", formValidate(loginSchema), Login);
-router.post("/auth/reset_password/:id/:token", ResetPassword);
-router.post("/auth/refresh_token", RefreshToken);
-router.post("/auth/logout", Logout);
+router.post("/register", formValidate(regSchema), Register);
+router.post("/login", formValidate(loginSchema), Login);
+router.post("/reset-password/:id/:token", ResetPassword);
+router.post("/refresh-token", RefreshToken);
+router.post("/logout", Logout);
 
 router.post(
-  "/auth/forgot_password",
+  "/forgot-password",
   formValidate(forgotPasswordSchema),
   ForgotPassword
 );
 router.post(
-  "/update_password",
+  "/update-password",
   verifyjwt,
   formValidate(updatePasswordSchema),
   UpdatePassword

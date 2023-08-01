@@ -21,7 +21,7 @@ const setCookies = (res, tokens) => {
   res.cookie("refreshToken", tokens.refreshToken, {
     httpOnly: true,
     sameSite: "strict",
-    path: "/api/auth/refresh_token",
+    path: "/api/v1/auth/refresh-token",
     // secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });

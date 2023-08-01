@@ -1,6 +1,10 @@
 const yup = require("yup");
 const Messages = require("../utils/messages");
 
+const passwordRegexp =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
+const phoneRegexp = /^(2547|2541)\d{8}$/;
+
 const regSchema = yup.object().shape({
   username: yup.string().required(),
   email: yup.string().email().required(),
@@ -11,10 +15,7 @@ const regSchema = yup.object().shape({
   referrer: yup.string(),
   password: yup
     .string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      Messages.passwordRegex
-    )
+    .matches(passwordRegexp, Messages.passwordRegex)
     .required(),
 });
 
@@ -30,17 +31,11 @@ const forgotPasswordSchema = yup.object().shape({
 const updatePasswordSchema = yup.object().shape({
   oldPassword: yup
     .string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      `Old ${Messages.passwordRegex}`
-    )
+    .matches(passwordRegexp, `Old ${Messages.passwordRegex}`)
     .required(),
   newPassword: yup
     .string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      `New ${Messages.passwordRegex}`
-    )
+    .matches(passwordRegexp, `New ${Messages.passwordRegex}`)
     .required(),
 });
 
@@ -48,7 +43,7 @@ const depositSchema = yup.object().shape({
   amount: yup.number().required(),
   phone: yup
     .string()
-    .matches(/^(2547|2541)\d{8}$/, Messages.invalidPhoneNumber)
+    .matches(phoneRegexp, Messages.invalidPhoneNumber)
     .required(),
 });
 
@@ -56,7 +51,7 @@ const withdrawalSchema = yup.object().shape({
   amount: yup.number().required(),
   phone: yup
     .string()
-    .matches(/^(2547|2541)\d{8}$/, Messages.invalidPhoneNumber)
+    .matches(phoneRegexp, Messages.invalidPhoneNumber)
     .required(),
 });
 

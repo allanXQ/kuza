@@ -13,6 +13,7 @@ const clearTokens = (res) => {
   res.cookie("refreshToken", "", {
     expires: new Date(0),
     httpOnly: true,
+    path: "/api/v1/auth/refresh-token",
     // secure: true,
     sameSite: "strict",
   });
