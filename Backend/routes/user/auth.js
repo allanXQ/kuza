@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { UpdatePassword } = require("../../controllers/account/updatepassword");
+
+const { UpdatePassword } = require("../../controllers/auth/updatepassword");
 const { Login } = require("../../controllers/auth/login");
 const { Register } = require("../../controllers/auth/register");
 const { ResetPassword } = require("../../controllers/auth/reset-password");

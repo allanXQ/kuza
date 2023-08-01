@@ -43,7 +43,7 @@ const MpesaWithdraw = async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const createWithdrawal = await Withdraw.create(
+    await Withdraw.create(
       {
         username,
         phone,
@@ -51,10 +51,6 @@ const MpesaWithdraw = async (req, res) => {
       },
       { session }
     );
-
-    if (!createWithdrawal) {
-      return res.status(400).json({ message: Messages.withdrawalFailed });
-    }
     const updateUser = await User.updateOne(
       { username },
       {

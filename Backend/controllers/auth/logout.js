@@ -41,10 +41,11 @@ const Logout = async (req, res) => {
       return res.status(401).json({ message: Messages.invalidToken });
     }
     clearTokens(res);
-    res.status(200).json({ message: Messages.logOutSuccess });
+    return res.status(200).json({ message: Messages.logOutSuccess });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: Messages.serverError });
+    clearTokens(res);
+    return res.status(500).json({ message: Messages.serverError });
   }
 };
 

@@ -11,12 +11,12 @@ const TinypesaWebhook = async (req, res) => {
     }
     const [Amount, MpesaReceiptNumber, TransactionDate, PhoneNumber] =
       CallbackMetadata.Item.map((item) => item["Value"]);
-    const PhoneString = PhoneNumber.toString().slice(3);
+    const PhoneString = PhoneNumber.toString();
 
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const createDeposit = await Deposit.create(
+    await Deposit.create(
       {
         phone: PhoneString,
         amount: Amount,
@@ -25,9 +25,6 @@ const TinypesaWebhook = async (req, res) => {
       },
       { session }
     );
-    if (!createDeposit) {
-      return res.status(400).json({ message: Messages.depositFailed });
-    }
     const phoneNumber = PhoneString;
     const userUpdate = await User.findOneAndUpdate(
       { phone: phoneNumber },
@@ -36,7 +33,7 @@ const TinypesaWebhook = async (req, res) => {
       },
       { session, new: true }
     );
-    if (userUpdate.nModified === 0) {
+    if (!userUpdate) {
       return res.status(400).json({ message: Messages.depositFailed });
     }
     await session.commitTransaction();

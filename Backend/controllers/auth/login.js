@@ -19,7 +19,7 @@ const Login = async (req, res) => {
     const tokens = generateTokens(user);
     const userUpdate = await User.updateOne(
       { email },
-      { $set: { refreshToken } }
+      { $set: { refreshToken: tokens.refreshToken } }
     );
     if (userUpdate.nModified === 0) {
       return res.status(400).json({ message: Messages.loginFailed });

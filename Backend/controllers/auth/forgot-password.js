@@ -12,12 +12,12 @@ const ForgotPassword = async (req, res) => {
     if (!findUser) {
       return res.status(400).json({ message: Messages.userNotFound });
     }
-    const secret = process.env.JWT_SECRET + findUser.password;
+    const secret = process.env.JWT_SECRET;
     const payload = {
       id: findUser.userid,
     };
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-    const url = req.hostname + ":" + process.env.PORT;
+    const url = process.env.APP_URL;
     const id = findUser.userid;
     const link = `https://${url}/reset-password/${id}/${token}`;
 
