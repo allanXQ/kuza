@@ -8,7 +8,7 @@ day = date.getDate();
 today = year + ":" + month + ":" + day;
 //add withdrawal mode etc
 const Withdrawals = new mongoose.Schema({
-  username: { type: String },
+  userid: { type: String },
   phone: { type: Number, required: true },
   amount: { type: Number, required: true },
   status: { type: String, default: "pending" },

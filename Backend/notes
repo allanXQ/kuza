@@ -5,6 +5,7 @@
 #create withdrawal fees model and add crud to mpesawithdraw controller
 
 #check resetpassword controller logic
+#implement account activation
 
 config
 
