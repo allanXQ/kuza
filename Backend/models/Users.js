@@ -22,6 +22,7 @@ const users = mongoose.Schema({
   status: { type: String, default: "inactive" },
   referrer: { type: String, default: "none" },
   refreshToken: { type: String },
+  passwordResetToken: { type: String },
   password: { type: String, required: true },
   created: { type: String, default: today },
 });

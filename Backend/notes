@@ -3,20 +3,15 @@
 #create sendmail function
 #create database logger
 #create withdrawal fees model and add crud to mpesawithdraw controller
-#forgotpassword controller need tweaking
-#group rotes by resource and not method
 
-#password reset link should only be used once.save reset token to db and invalidate after use
-#update reset url(consider using url from .env)
-
-#use messages module
+#check resetpassword controller logic
 
 config
 
 working controllers
 auth - register, login
 
-    account
+account-deposithistory,withdrawalhistory
 
 middleware
 

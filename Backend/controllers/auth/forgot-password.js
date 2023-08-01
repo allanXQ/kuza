@@ -19,7 +19,12 @@ const ForgotPassword = async (req, res) => {
     const token = jwt.sign(payload, secret, { expiresIn: "15m" });
     const url = process.env.APP_URL;
     const id = findUser.userid;
-    const link = `https://${url}/reset-password/${id}/${token}`;
+
+    findUser.passwordResetToken = token;
+
+    await findUser.save();
+
+    const link = `${url}/api/v1/auth/reset-password/${id}/${token}`;
 
     nodeoutlook.sendEmail({
       auth: {

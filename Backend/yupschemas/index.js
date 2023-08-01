@@ -28,6 +28,13 @@ const forgotPasswordSchema = yup.object().shape({
   email: yup.string().email().required(),
 });
 
+const resetPasswordSchema = yup.object().shape({
+  password: yup
+    .string()
+    .matches(passwordRegexp, Messages.passwordRegex)
+    .required(),
+});
+
 const updatePasswordSchema = yup.object().shape({
   oldPassword: yup
     .string()
@@ -59,6 +66,7 @@ module.exports = {
   regSchema,
   loginSchema,
   forgotPasswordSchema,
+  resetPasswordSchema,
   updatePasswordSchema,
   depositSchema,
   withdrawalSchema,

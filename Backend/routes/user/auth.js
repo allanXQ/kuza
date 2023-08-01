@@ -14,11 +14,16 @@ const {
   loginSchema,
   updatePasswordSchema,
   forgotPasswordSchema,
+  resetPasswordSchema,
 } = require("../../yupschemas");
 
 router.post("/register", formValidate(regSchema), Register);
 router.post("/login", formValidate(loginSchema), Login);
-router.post("/reset-password/:id/:token", ResetPassword);
+router.post(
+  "/reset-password/:id/:token",
+  formValidate(resetPasswordSchema),
+  ResetPassword
+);
 router.post("/refresh-token", RefreshToken);
 router.post("/logout", Logout);
 
