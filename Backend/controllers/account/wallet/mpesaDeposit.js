@@ -1,7 +1,7 @@
 const WalletConfig = require("../../../config/wallet");
 const Messages = require("../../../utils/messages");
 
-const MpesaDeposit = async (req, res) => {
+const mpesaDeposit = async (req, res) => {
   const { phone, amount } = req.body;
   const { minDeposit, maxDeposit } = WalletConfig;
   if (parseInt(amount) < minDeposit) {
@@ -41,4 +41,4 @@ const MpesaDeposit = async (req, res) => {
     });
 };
 
-module.exports = { MpesaDeposit };
+module.exports = { mpesaDeposit };

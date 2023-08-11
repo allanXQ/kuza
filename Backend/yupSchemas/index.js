@@ -62,6 +62,16 @@ const withdrawalSchema = yup.object().shape({
     .required(),
 });
 
+const loanRequestSchema = yup.object().shape({
+  userId: yup.string().required(),
+  userName: yup.string().required(),
+  amount: yup.number().required(),
+  purpose: yup.string().required(),
+  description: yup.string().required(),
+  interest: yup.number().required(),
+  repaymentPeriod: yup.date().required(),
+});
+
 module.exports = {
   regSchema,
   loginSchema,
@@ -70,4 +80,5 @@ module.exports = {
   updatePasswordSchema,
   depositSchema,
   withdrawalSchema,
+  loanRequestSchema,
 };

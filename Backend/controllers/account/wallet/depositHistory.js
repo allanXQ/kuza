@@ -1,14 +1,14 @@
-const MpesaDeposits = require("../../../models/MpesaDeposits");
+const mpesaDeposits = require("../../../models/mpesaDeposits");
 const Messages = require("../../../utils/messages");
 
-const MpesaDepositHistory = async (req, res) => {
+const mpesaDepositHistory = async (req, res) => {
   try {
     const { phone } = req.body;
     if (!phone) {
       return res.status(400).json({ message: Messages.invalidRequest });
     }
 
-    const depositHistory = await MpesaDeposits.find({ phone });
+    const depositHistory = await mpesaDeposits.find({ phone });
     return res
       .status(200)
       .json({ message: Messages.requestSuccessful, payload: depositHistory });
@@ -18,4 +18,4 @@ const MpesaDepositHistory = async (req, res) => {
   }
 };
 
-module.exports = { MpesaDepositHistory };
+module.exports = { mpesaDepositHistory };

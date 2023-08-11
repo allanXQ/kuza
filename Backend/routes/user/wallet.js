@@ -2,22 +2,22 @@ const router = require("express").Router();
 
 const {
   MpesaWithdraw,
-} = require("../../controllers/account/Wallet/MpesaWithdraw");
+} = require("../../controllers/account/wallet/mpesaWithdrawal");
 const {
   TinypesaWebhook,
-} = require("../../controllers/account/Wallet/TinypesaWebhook");
+} = require("../../controllers/account/wallet/TinypesaWebhook");
 const {
   MpesaDeposit,
-} = require("../../controllers/account/Wallet/MpesaDeposit");
+} = require("../../controllers/account/wallet/mpesaDeposit");
 const {
   MpesaDepositHistory,
-} = require("../../controllers/account/Wallet/DepositHistory");
+} = require("../../controllers/account/wallet/depositHistory");
 const {
   WithdrawalHistory,
-} = require("../../controllers/account/Wallet/WithdrawalHistory");
+} = require("../../controllers/account/wallet/withdrawalHistory");
 const { verifyjwt } = require("../../middleware/verifyjwt");
 const formValidate = require("../../middleware/validate");
-const { depositSchema, withdrawalSchema } = require("../../yupschemas");
+const { depositSchema, withdrawalSchema } = require("../../yupSchemas");
 
 router.post(
   "/mpesa/deposit",

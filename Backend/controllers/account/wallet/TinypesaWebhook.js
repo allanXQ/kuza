@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const User = require("../../../models/Users");
+const User = require("../../../models/users");
 const Messages = require("../../../utils/messages");
 
 const TinypesaWebhook = async (req, res) => {

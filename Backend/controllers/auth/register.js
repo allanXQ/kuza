@@ -1,5 +1,5 @@
 const uuid = require("uuid");
-const User = require("../../models/Users");
+const User = require("../../models/users");
 const bcrypt = require("bcrypt");
 const Messages = require("../../utils/messages");
 

@@ -1,10 +1,10 @@
-const Withdrawals = require("../../../models/Withdrawals");
+const withdrawals = require("../../../models/withdrawals");
 const Messages = require("../../../utils/messages");
 
-const WithdrawalHistory = async (req, res) => {
+const withdrawalHistory = async (req, res) => {
   try {
     const { userid } = req.body;
-    const getWithdrawals = await Withdrawals.find({ userid });
+    const getWithdrawals = await withdrawals.find({ userid });
 
     return res
       .status(200)
@@ -15,4 +15,4 @@ const WithdrawalHistory = async (req, res) => {
   }
 };
 
-module.exports = { WithdrawalHistory };
+module.exports = { withdrawalHistory };

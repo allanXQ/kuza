@@ -1,5 +1,5 @@
 require("dotenv").config();
-const User = require("../../models/Users");
+const User = require("../../models/users");
 const jwt = require("jsonwebtoken");
 const nodeoutlook = require("nodejs-nodemailer-outlook");
 const Messages = require("../../utils/messages");

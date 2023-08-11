@@ -15,7 +15,7 @@ const {
   updatePasswordSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
-} = require("../../yupschemas");
+} = require("../../yupSchemas");
 
 router.post("/register", formValidate(regSchema), Register);
 router.post("/login", formValidate(loginSchema), Login);
