@@ -6,6 +6,10 @@
 
 #check resetpassword controller logic
 #implement account activation
+#implement google auth, stripe payments
+#add kyc functionality
+
+# need a way to
 
 config
 
