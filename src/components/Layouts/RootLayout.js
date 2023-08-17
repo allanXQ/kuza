@@ -2,26 +2,49 @@ import React from "react";
 import { Sidenav, Topbar } from "../Navigation/Navbar";
 import { Outlet } from "react-router-dom";
 import { Grid } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const drawerWidth = "200px";
 const topBarHeight = "50px";
 const drawerHeight = "100vh";
 
 const RootLayout = () => {
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+
   return (
     <>
-      <Topbar topBarHeight={topBarHeight} drawerWidth={drawerWidth} />
-      <Sidenav drawerHeight={drawerHeight} drawerWidth={drawerWidth} />
       <Grid
         container
         sx={{
-          position: "relative",
-          // left: 235,
-          top: 30,
-          gap: 2,
+          display: "flex",
         }}
       >
-        <Outlet />
+        <Grid item>
+          <Sidenav
+            drawerHeight={drawerHeight}
+            drawerWidth={drawerWidth}
+            topBarHeight={topBarHeight}
+            isOpen={open}
+          />
+        </Grid>
+        <Grid item>
+          <Topbar
+            topBarHeight={topBarHeight}
+            drawerWidth={drawerWidth}
+            isOpen={open}
+            setOpen={setOpen}
+          />
+          <Grid
+            container
+            sx={{
+              mt: `calc(${topBarHeight} + 1rem)`,
+              width: { md: `calc(100vw - ${drawerWidth})` },
+            }}
+          >
+            <Outlet />
+          </Grid>
+        </Grid>
       </Grid>
     </>
   );

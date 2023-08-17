@@ -13,11 +13,11 @@ const stats = [
     value: "₹ 1,00,000",
   },
   {
-    name: "Loans Taken",
+    name: "Loans Given",
     value: "₹ 1,00,000",
   },
   {
-    name: "Loans Given",
+    name: "Loans Taken",
     value: "₹ 1,00,000",
   },
   {
@@ -30,20 +30,35 @@ const stats = [
   // },
 ];
 
-const Dashboard = () => {
-  return stats.map((stat, index) => (
-    <Grid item key={index}>
-      {/* <Card
-        sx={{
-          width: 267,
-          height: 120,
-        }}
-      >
-        <Typography variant="h5">{stat.name}</Typography>
-        <Typography variant="h6">{stat.value}</Typography>
-      </Card> */}
-    </Grid>
-  ));
-};
+const Dashboard = () => (
+  <Grid
+    container
+    spacing={2}
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      // gap: 2,
+      alignItems: "center",
+      flexGrow: 1,
+      flexBasis: 0,
+      flexWrap: "wrap",
+    }}
+  >
+    {stats.map((stat, index) => (
+      <Grid item>
+        <Card
+          key={index}
+          sx={{
+            width: 270,
+            height: 150,
+          }}
+        >
+          <Typography variant="h5">{stat.name}</Typography>
+          <Typography variant="h6">{stat.value}</Typography>
+        </Card>
+      </Grid>
+    ))}
+  </Grid>
+);
 
 export default Dashboard;
