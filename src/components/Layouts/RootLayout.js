@@ -1,12 +1,17 @@
 import React from "react";
-import Navbar from "../Navigation/Navbar";
+import { Sidenav, Topbar } from "../Navigation/Navbar";
 import { Outlet } from "react-router-dom";
 import { Grid } from "@mui/material";
+
+const drawerWidth = "200px";
+const topBarHeight = "50px";
+const drawerHeight = "100vh";
 
 const RootLayout = () => {
   return (
     <>
-      <Navbar />
+      <Topbar topBarHeight={topBarHeight} drawerWidth={drawerWidth} />
+      <Sidenav drawerHeight={drawerHeight} drawerWidth={drawerWidth} />
       <Grid
         container
         sx={{

@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #e7eaf4;
+  /* color: white; */
+  font-family: "Roboto", sans-serif;
+}
+
+/* a {
+  text-decoration: none;
+  color: #1d1b1b;
+} */
+
+.ps-menuitem-root {
+  font-size: 0.9rem;
+  padding: 0;
+  margin: 0;
+}
+
+.css-1t8x7v1 > .ps-menu-button {
+  /* font-size: 0.9rem; */
+  padding: 0;
+  margin: 0;
+}

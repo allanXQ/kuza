@@ -1,3 +1,4 @@
+import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -11,7 +12,7 @@ const theme = createTheme({
   typography: {
     navlink: {
       fontSize: "1rem",
-      fontWeight: 500,
+      // fontWeight: 500,
       color: "#1d1b1b",
       textDecoration: "none",
     },

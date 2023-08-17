@@ -18,29 +18,36 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import { Link } from "react-router-dom";
 import {
-  AccountBalance,
-  BackHand,
-  Calculate,
-  Chat,
-  Dashboard,
-  ExpandLess,
-  ExpandMore,
-  History,
-  Logout,
-  Payment,
+  AccountBalanceOutlined as AccountBalance,
+  BackHandOutlined as BackHand,
+  CalculateOutlined as Calculate,
+  ChatOutlined as Chat,
+  DashboardOutlined as Dashboard,
+  HistoryOutlined as History,
+  LogoutOutlined as Logout,
+  PaymentOutlined as Payment,
   Payments,
-  Person,
-  PointOfSale,
-  Receipt,
-  Redeem,
-  RequestPage,
-  RequestQuote,
+  PersonOutlined as Person,
+  PointOfSaleOutlined as PointOfSale,
+  ReceiptOutlined as Receipt,
+  RedeemOutlined as Redeem,
+  RequestPageOutlined as RequestPage,
+  RequestQuoteOutlined as RequestQuote,
   Savings,
 } from "@mui/icons-material";
 import { useState } from "react";
-import { Collapse } from "@mui/material";
+import { Avatar, Badge, Collapse } from "@mui/material";
+import {
+  Menu,
+  MenuItem,
+  Sidebar,
+  SubMenu,
+  menuClasses,
+} from "react-pro-sidebar";
+// import "react-pro-sidebar/dist/css/styles.css";
 
 const navlinks = [
   {
@@ -93,6 +100,7 @@ const navlinks = [
     name: "Conversations",
     icon: <Chat />,
     path: "/Conversations",
+    badge: 4,
   },
   {
     name: "Transaction History",
@@ -133,178 +141,99 @@ const navlinks = [
   },
 ];
 
-const drawerWidth = 220;
-
-function Navbar(props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [openSubmenus, setOpenSubmenus] = useState({});
-
-  const handleSubmenuClick = (submenuName) => {
-    setOpenSubmenus({
-      ...openSubmenus,
-      [submenuName]: !openSubmenus[submenuName],
-    });
+export const Sidenav = ({ drawerWidth, drawerHeight }) => {
+  const MenuItemStyle = {
+    paddingLeft: "5px",
+    margin: "0",
   };
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const drawer = (
-    <Box>
-      <Toolbar />
-      <List disablePadding>
-        {navlinks.map((link, index) =>
-          !link.submenu ? (
-            <ListItem
+  return (
+    <Sidebar
+      toggled={true}
+      width={drawerWidth}
+      style={{
+        height: drawerHeight,
+        backgroundColor: "#fff",
+      }}
+    >
+      <Avatar />
+      <Menu>
+        {navlinks.map((item, index) =>
+          !item.submenu ? (
+            <MenuItem
               key={index}
-              component={Link}
-              to={link.path}
-              sx={(theme) => ({
-                display: "flex",
-                alignItems: "center",
-                gap: theme.spacing(2),
-              })}
-              className="navlink"
+              component={<Link to={item.path} />}
+              icon={item.icon}
+              style={{ ...MenuItemStyle }}
             >
-              {link.icon && link.icon}
-              <ListItemText
-                component={Typography}
-                variant="navlink"
-                primary={link.name}
-              />
-            </ListItem>
-          ) : (
-            <List disablePadding>
-              <ListItem
-                key={link.name}
-                onClick={() => handleSubmenuClick(link.name)}
-                sx={(theme) => ({
-                  display: "flex",
-                  gap: theme.spacing(2),
-                })}
-              >
-                {link.icon && link.icon}
-                <ListItemText
-                  component={Typography}
-                  variant="navlink"
-                  primary={link.name}
-                />
-                {openSubmenus[link.name] ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              {link.submenu.map((submenu) => (
-                <Collapse
-                  in={openSubmenus[link.name]}
-                  timeout="auto"
-                  unmountOnExit
-                  sx={(theme) => ({
-                    pl: theme.spacing(2),
-                  })}
+              {item.badge ? (
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.8rem",
+                    height: "25px",
+                  }}
                 >
-                  <List component="div" disablePadding>
-                    <ListItem
-                      component={Link}
-                      to={submenu.path}
-                      key={submenu.name}
-                      sx={(theme) => ({
-                        display: "flex",
-                        gap: theme.spacing(2),
-                      })}
-                      className="navlink"
-                    >
-                      {submenu.icon && submenu.icon}
-                      <Typography variant="navlink" to={submenu.path}>
-                        {submenu.name}
-                      </Typography>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              ))}
-            </List>
+                  {item.name}
+                  <Badge badgeContent={item.badge} color="secondary" />
+                </span>
+              ) : (
+                item.name
+              )}
+            </MenuItem>
+          ) : (
+            <SubMenu
+              key={index}
+              label={item.name}
+              style={{
+                ...MenuItemStyle,
+              }}
+              icon={item.icon}
+            >
+              {item.submenu.map((subitem, index) => {
+                return (
+                  <MenuItem
+                    key={index}
+                    component={<Link to={subitem.path} />}
+                    icon={subitem.icon}
+                    style={{ ...MenuItemStyle }}
+                  >
+                    {subitem.name}
+                  </MenuItem>
+                );
+              })}
+            </SubMenu>
           )
         )}
-      </List>
-    </Box>
+      </Menu>
+    </Sidebar>
   );
+};
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
+export const Topbar = ({ drawerWidth, topBarHeight }) => {
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar
-        position="absolute"
-        sx={{
-          bgcolor: "white",
-          boxShadow: "none",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          // width: { sm: `calc(100% - ${drawerWidth}px)` },
-          // ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
+    <AppBar
+      // position="relative"
+      sx={{
+        width: { sm: `calc(100% - ${drawerWidth})` },
+        ml: { sm: `${drawerWidth}` },
+        height: topBarHeight,
+      }}
+    >
+      <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2, display: { sm: "none" } }}
         >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-        }}
-      ></Box>
-    </Box>
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {/* {props.title} */}
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
-}
-
-export default Navbar;
+};

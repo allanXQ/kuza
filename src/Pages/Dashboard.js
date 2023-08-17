@@ -33,7 +33,7 @@ const stats = [
 const Dashboard = () => {
   return stats.map((stat, index) => (
     <Grid item key={index}>
-      <Card
+      {/* <Card
         sx={{
           width: 267,
           height: 120,
@@ -41,7 +41,7 @@ const Dashboard = () => {
       >
         <Typography variant="h5">{stat.name}</Typography>
         <Typography variant="h6">{stat.value}</Typography>
-      </Card>
+      </Card> */}
     </Grid>
   ));
 };
