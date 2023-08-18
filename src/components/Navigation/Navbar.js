@@ -1,23 +1,9 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { Link } from "react-router-dom";
 import {
@@ -29,25 +15,15 @@ import {
   HistoryOutlined as History,
   LogoutOutlined as Logout,
   PaymentOutlined as Payment,
-  Payments,
   PersonOutlined as Person,
   PointOfSaleOutlined as PointOfSale,
   ReceiptOutlined as Receipt,
   RedeemOutlined as Redeem,
   RequestPageOutlined as RequestPage,
   RequestQuoteOutlined as RequestQuote,
-  Savings,
 } from "@mui/icons-material";
-import { useState } from "react";
 import { Avatar, Badge, useTheme } from "@mui/material";
-import {
-  Menu,
-  MenuItem,
-  Sidebar,
-  SubMenu,
-  menuClasses,
-} from "react-pro-sidebar";
-// import "react-pro-sidebar/dist/css/styles.css";
+import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 
 const navlinks = [
   {
@@ -109,27 +85,27 @@ const navlinks = [
       {
         name: "Deposit History",
         icon: <Receipt />,
-        path: "/transactions/deposit-history",
+        path: "/deposit-history",
       },
       {
         name: "Withdrawal History",
         icon: <Receipt />,
-        path: "/transactions/withdrawal-history",
+        path: "/withdrawal-history",
       },
       {
         name: "Loan Requests",
         icon: <RequestPage />,
-        path: "/transactions/loan-requests",
+        path: "/loan-requests",
       },
       {
         name: "Loan Payments",
         icon: <Receipt />,
-        path: "/transactions/loan-payments",
+        path: "/loan-payments",
       },
       {
         name: "Loan History",
         icon: <Receipt />,
-        path: "/transactions/loan-history",
+        path: "/loan-history",
       },
     ],
   },
@@ -148,7 +124,6 @@ export const Sidenav = ({
   isOpen,
 }) => {
   const theme = useTheme();
-  console.log(theme);
   const MenuItemStyle = {
     paddingLeft: "5px",
     margin: "0",
@@ -160,7 +135,7 @@ export const Sidenav = ({
       alignItems="center"
       backgroundColor="rgb(249, 249, 249, 0.7)"
       gap={2}
-      width={drawerWidth}
+      width={{ md: drawerWidth }}
     >
       <Sidebar
         toggled={theme.breakpoints.down("md") ? isOpen : true}

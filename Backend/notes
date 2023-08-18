@@ -1,14 +1,15 @@
 //notes and working components
 #check helmet and cors implementation
 #create sendmail function
-#create database logger
+#create winston logger
 #create withdrawal fees model and add crud to mpesawithdraw controller
 
 #check resetpassword controller logic
 #implement account activation
-#implement google auth, stripe payments
-#add kyc functionality
+#implement google auth, stripe payments, twillio
 #add chat functionality
+
+#add kyc functionality
 
 # need a way to
 

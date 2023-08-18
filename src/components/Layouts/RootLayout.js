@@ -2,7 +2,6 @@ import React from "react";
 import { Sidenav, Topbar } from "../Navigation/Navbar";
 import { Outlet } from "react-router-dom";
 import { Grid } from "@mui/material";
-import { useTheme } from "@emotion/react";
 
 const drawerWidth = "200px";
 const topBarHeight = "50px";
@@ -10,7 +9,6 @@ const drawerHeight = "100vh";
 
 const RootLayout = () => {
   const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
 
   return (
     <>
