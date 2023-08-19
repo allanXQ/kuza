@@ -3,11 +3,10 @@ const uuid = require("uuid");
 const id = uuid.v4();
 const role = require("../config/roles");
 userrole = role.user;
-const date = new Date();
-year = date.getFullYear();
-month = date.getMonth();
-day = date.getDate();
-today = year + ":" + month + ":" + day;
+
+const isLocalAuth = function () {
+  return this.authMethod === "local";
+};
 
 //add kyc
 const users = mongoose.Schema({
@@ -15,15 +14,15 @@ const users = mongoose.Schema({
   role: { type: String, default: userrole },
   firstname: { type: String },
   lastname: { type: String },
-  username: { type: String, required: true, unique: true },
+  username: { type: String, required: isLocalAuth, unique: true },
   email: { type: String, required: true, unique: true },
-  phone: { type: Number, required: true, unique: true },
+  phone: { type: Number, required: isLocalAuth, unique: true },
   balance: { type: Number, default: 50 },
   status: { type: String, default: "inactive" },
   referrer: { type: String, default: "none" },
   refreshToken: { type: String },
   passwordResetToken: { type: String },
-  password: { type: String, required: true },
+  password: { type: String, required: isLocalAuth },
   created: { type: String, default: today },
 });
 

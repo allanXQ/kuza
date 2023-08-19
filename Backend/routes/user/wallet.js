@@ -19,12 +19,12 @@ const { verifyjwt } = require("../../middleware/verifyjwt");
 const formValidate = require("../../middleware/validate");
 const { depositSchema, withdrawalSchema } = require("../../yupSchemas");
 
-router.post(
-  "/mpesa/deposit",
-  verifyjwt,
-  formValidate(depositSchema),
-  MpesaDeposit
-);
+// router.post(
+//   "/mpesa/deposit",
+//   verifyjwt,
+//   formValidate(depositSchema),
+//   MpesaDeposit
+// );
 router.post("/tinypesa/webhook", TinypesaWebhook);
 router.post(
   "/withdraw",
@@ -33,7 +33,7 @@ router.post(
   MpesaWithdraw
 );
 
-router.get("/deposit-history", verifyjwt, MpesaDepositHistory);
-router.get("/withdrawal-history", verifyjwt, WithdrawalHistory);
+// router.get("/deposit-history", verifyjwt, MpesaDepositHistory);
+// router.get("/withdrawal-history", verifyjwt, WithdrawalHistory);
 
 module.exports = router;

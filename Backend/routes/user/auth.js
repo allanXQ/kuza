@@ -16,6 +16,7 @@ const {
   forgotPasswordSchema,
   resetPasswordSchema,
 } = require("../../yupSchemas");
+const { googleOAuth } = require("../../controllers/auth/googleOAuth");
 
 router.post("/register", formValidate(regSchema), Register);
 router.post("/login", formValidate(loginSchema), Login);
@@ -38,5 +39,7 @@ router.post(
   formValidate(updatePasswordSchema),
   UpdatePassword
 );
+
+router.get("/google", googleOAuth);
 
 module.exports = router;
