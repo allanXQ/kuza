@@ -12,7 +12,7 @@ const MpesaWithdraw = async (req, res) => {
       return res.status(400).json({ message: Messages.userNotFound });
     }
     const getBalance = parseInt(getUser.balance);
-    const username = getUser.username;
+    const userid = getUser.userid;
     const taxAmount = intAmount * withdrawalFeePercentage;
     const totalAmount = intAmount + taxAmount;
 
@@ -45,14 +45,14 @@ const MpesaWithdraw = async (req, res) => {
 
     await Withdraw.create(
       {
-        username,
+        userid,
         phone,
         amount: intAmount,
       },
       { session }
     );
     const updateUser = await User.updateOne(
-      { username },
+      { userid },
       {
         $inc: { balance: -totalAmount },
       },

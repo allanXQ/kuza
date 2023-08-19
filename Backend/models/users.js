@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
-const uuid = require("uuid");
-const id = uuid.v4();
 const role = require("../config/roles");
-userrole = role.user;
 
 const isLocalAuth = function () {
   return this.authMethod === "local";
@@ -11,13 +8,19 @@ const isLocalAuth = function () {
 //add kyc
 const users = mongoose.Schema({
   userid: { type: String },
-  role: { type: String, default: userrole },
+  role: { type: String, default: role.user },
   firstname: { type: String },
   lastname: { type: String },
+  googleName: { type: String, required: !isLocalAuth },
   username: { type: String, required: isLocalAuth, unique: true },
   email: { type: String, required: true, unique: true },
   phone: { type: Number, required: isLocalAuth, unique: true },
   balance: { type: Number, default: 50 },
+  authMethod: {
+    type: String,
+    enum: ["local", "google"],
+    required: true,
+  },
   status: { type: String, default: "inactive" },
   referrer: { type: String, default: "none" },
   refreshToken: { type: String },

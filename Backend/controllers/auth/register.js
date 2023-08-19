@@ -33,6 +33,7 @@ const Register = async (req, res) => {
       email,
       phone,
       referrer,
+      authMethod: "local",
       password,
     });
     return res.status(200).json({ message: Messages.userCreatedSuccessfully });
