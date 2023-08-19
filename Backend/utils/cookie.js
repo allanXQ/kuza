@@ -10,9 +10,9 @@ const generateTokens = (user) => {
   const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
     expiresIn: "1h",
   });
+  console.log(accessToken, refreshToken);
   return { accessToken, refreshToken };
 };
-
 const setCookies = (res, tokens) => {
   res.cookie("accessToken", tokens.accessToken, {
     httpOnly: true,

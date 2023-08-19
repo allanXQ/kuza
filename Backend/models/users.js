@@ -26,7 +26,7 @@ const users = mongoose.Schema({
   refreshToken: { type: String },
   passwordResetToken: { type: String },
   password: { type: String, required: isLocalAuth },
-  created: { type: String, default: today },
+  created: { type: Date, default: Date.now },
 });
 
 const model = mongoose.model("users", users);

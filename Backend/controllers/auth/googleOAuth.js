@@ -3,12 +3,12 @@ require("dotenv").config();
 const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/users");
-const { generateTokens } = require("../../utils/cookie");
+const { generateTokens, setCookies } = require("../../utils/cookie");
 const Messages = require("../../utils/messages");
 
 const id = uuid.v4();
 
-const UserSuccess = async (findUser) => {
+const UserSuccess = async (res, findUser, email) => {
   const tokens = generateTokens(findUser);
   const userUpdate = await User.updateOne(
     { email },
@@ -18,34 +18,30 @@ const UserSuccess = async (findUser) => {
     return res.status(400).json({ message: Messages.loginFailed });
   }
   setCookies(res, tokens);
-  return res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+  return res.redirect(301, `${process.env.CLIENT_URL}/dashboard`);
 };
 
 const googleOAuth = async (req, res) => {
   try {
     const code = req.query.code;
     const { id_token, access_token } = await getGoogleAuthTokens(code);
-    const { email, name } = jwt.decode(id_token);
+    const decoded = jwt.decode(id_token);
+    const { email, name } = decoded;
     const findUser = await User.findOne({ email });
-    if (findUser) UserSuccess(findUser);
-    const firstname = name.split(" ")[0];
-    const lastname = name.split(" ")[1];
+    if (findUser) return await UserSuccess(res, findUser, email);
     const createUser = await User.create({
       userid: id,
       email,
-      firstname,
-      lastname,
+      googleName: name,
       authMethod: "google",
     });
     if (!createUser) {
       return res.status(400).json({ message: Messages.loginFailed });
     }
-    UserSuccess(createUser);
+    return await UserSuccess(res, createUser, email);
   } catch (error) {
     console.log(error);
-    return res.redirect(`${process.env.CLIENT_URL}/login`, {
-      message: Messages.serverError,
-    });
+    return res.redirect(301, `${process.env.CLIENT_URL}/login`);
   }
 };
 
